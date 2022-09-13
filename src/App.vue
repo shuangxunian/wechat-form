@@ -18,7 +18,7 @@
             接收人信息
           </el-col>
           <el-col :span="16">
-            <el-button type="primary" plain>添加</el-button>
+            <el-button type="primary" plain @click="nowState = 2">添加</el-button>
           </el-col>
         </el-row>
         <div class="info">
@@ -58,6 +58,51 @@
           </el-form-item>
         </el-form>
       </div>
+      <div v-if="nowState === 2">
+        <el-form label-position="left" :model="getInfo" :rules="rules" ref="getRef" label-width="170px">
+          <el-form-item label="名字" prop="name">
+            <el-input v-model="getInfo.name"></el-input>
+          </el-form-item>
+          <el-form-item label="ID" prop="id">
+            <el-input v-model="getInfo.id"></el-input>
+          </el-form-item>
+          <el-form-item label="模板ID" prop="useTemplateId">
+            <el-input v-model="getInfo.useTemplateId"></el-input>
+          </el-form-item>
+          <el-form-item label="所在省份" prop="province">
+            <el-input v-model="getInfo.province"></el-input>
+          </el-form-item>
+          <el-form-item label="所在城市" prop="city">
+            <el-input v-model="getInfo.city"></el-input>
+          </el-form-item>
+          <el-form-item label="星座运势（阳历生日）" prop="horoscopeDate">
+            <el-date-picker
+              v-model="getInfo.horoscopeDate"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+            <!-- <el-input v-model="getInfo.horoscopeDate"></el-input> -->
+          </el-form-item>
+          <el-form-item label="获取运势的时间" prop="horoscopeDateType">
+            <el-select v-model="getInfo.horoscopeDateType" placeholder="请选择" style="width:220px">
+              <el-option
+                v-for="item in horoType"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name">
+              </el-option>
+            </el-select>
+            <!-- <el-input v-model="getInfo.horoscopeDateType"></el-input> -->
+          </el-form-item>
+          <el-form-item label="点击详情跳转页" prop="openUrl">
+            <el-input v-model="getInfo.openUrl"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <!-- <el-button type="primary" @click="submitForm('getRef')">立即创建</el-button> -->
+            <el-button type="primary" @click="next">下一步</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
     <div class="bottom">
       made by shuangxunian | code github
@@ -80,6 +125,13 @@ export default {
         { name: '黑色', value: false },
         { name: '彩色', value: true }
       ],
+      horoType: [
+        { name: '今日' },
+        { name: '明日' },
+        { name: '本周' },
+        { name: '本月' },
+        { name: '今年' }
+      ],
       userInfo: {
         APP_ID: '',
         APP_SECRET: '',
@@ -96,7 +148,41 @@ export default {
         ],
         FESTIVALS_LIMIT: [
           { required: true, message: 'FESTIVALS_LIMIT不能为空', trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: '名字不能为空', trigger: 'blur' }
+        ],
+        id: [
+          { required: true, message: 'id不能为空', trigger: 'blur' }
+        ],
+        useTemplateId: [
+          { required: true, message: '模板id不能为空', trigger: 'blur' }
+        ],
+        province: [
+          { required: true, message: '所在省份不能为空', trigger: 'blur' }
+        ],
+        city: [
+          { required: true, message: '所在城市不能为空', trigger: 'blur' }
+        ],
+        horoscopeDate: [
+          { required: true, message: '星座运势不能为空', trigger: 'blur' }
+        ],
+        horoscopeDateType: [
+          { required: true, message: '获取运势的时间不能为空', trigger: 'blur' }
+        ],
+        openUrl: [
+          { required: true, message: '详情页不能为空', trigger: 'blur' }
         ]
+      },
+      getInfo: {
+        name: '',
+        id: '',
+        useTemplateId: '',
+        province: '',
+        city: '',
+        horoscopeDate: '',
+        horoscopeDateType: '',
+        openUrl: 'https://shuangxunian.github.io/',
       }
     }
   },
@@ -112,6 +198,16 @@ export default {
         }
       });
     },
+    next () {
+      this.$refs.getRef.validate((valid) => {
+        if (valid) {
+          this.$message.success('已保存')
+          this.nowState = 3
+        } else {
+          return false
+        }
+      });
+    }
   }
 }
 </script>
