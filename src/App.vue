@@ -18,7 +18,7 @@
             接收人信息
           </el-col>
           <el-col :span="16">
-            <el-button type="primary" plain @click="nowState = 2">添加</el-button>
+            <el-button type="primary" plain @click="refreshGetInfo();nowState = 2">添加</el-button>
           </el-col>
         </el-row>
         <div class="info">
@@ -174,7 +174,13 @@ export default {
           { required: true, message: '详情页不能为空', trigger: 'blur' }
         ]
       },
-      getInfo: {
+      getInfo: {},
+      USERS: []
+    }
+  },
+  methods: {
+    refreshGetInfo() {
+      this.getInfo = {
         name: '',
         id: '',
         useTemplateId: '',
@@ -183,10 +189,10 @@ export default {
         horoscopeDate: '',
         horoscopeDateType: '',
         openUrl: 'https://shuangxunian.github.io/',
+        festivals: [],
+        customizedDateList: []
       }
-    }
-  },
-  methods: {
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -198,10 +204,28 @@ export default {
         }
       });
     },
+    getYMD (inputDate) {
+      const date = new Date(inputDate)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? ('0' + m) : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      return y + '-' + m + '-' + d
+    },
+    getMD (inputDate) {
+      const date = new Date(inputDate)
+      let m = date.getMonth() + 1
+      m = m < 10 ? ('0' + m) : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      return m + '-' + d
+    },
     next () {
       this.$refs.getRef.validate((valid) => {
         if (valid) {
           this.$message.success('已保存')
+          this.getInfo.horoscopeDate = this.getMD(this.getInfo.horoscopeDate)
           this.nowState = 3
         } else {
           return false
