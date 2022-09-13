@@ -29,13 +29,39 @@
         </div>
       </div>
       <div v-if="nowState === 1">
-
+        <el-form label-position="left" :model="userInfo" :rules="rules" ref="userRef" label-width="150px">
+          <el-form-item label="APP_ID" prop="APP_ID">
+            <el-input v-model="userInfo.APP_ID"></el-input>
+          </el-form-item>
+          <el-form-item label="APP_SECRET" prop="APP_SECRET">
+            <el-input v-model="userInfo.APP_SECRET"></el-input>
+          </el-form-item>
+          <el-form-item label="文字颜色" prop="isShowColor">
+            <el-select v-model="userInfo.isShowColor" placeholder="请选择">
+              <el-option
+                v-for="item in showcolor"
+                :key="item.value"
+                :label="item.name"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!-- <el-input v-model="userInfo.isShowColor"></el-input> -->
+          </el-form-item>
+          <el-form-item label="结果返回模板" prop="CALLBACK_TEMPLATE_ID">
+            <el-input v-model="userInfo.CALLBACK_TEMPLATE_ID"></el-input>
+          </el-form-item>
+          <el-form-item label="自己的id" prop="CALLBACK_USERS">
+            <el-input v-model="userInfo.CALLBACK_USERS"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('userRef')">立即创建</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
     <div class="bottom">
       made by shuangxunian | code github
     </div>
-
   </div>
 </template>
 
@@ -49,10 +75,44 @@ export default {
     return {
       nowState: 0,
       myInfo: 0,
-      getuser: []
+      getuser: [],
+      showcolor: [
+        { name: '黑色', value: false },
+        { name: '彩色', value: true }
+      ],
+      userInfo: {
+        APP_ID: '',
+        APP_SECRET: '',
+        isShowColor: true,
+        CALLBACK_TEMPLATE_ID: '',
+        CALLBACK_USERS: ''
+      },
+      rules: {
+        APP_ID: [
+          { required: true, message: 'APP_ID不能为空', trigger: 'blur' }
+        ],
+        APP_SECRET: [
+          { required: true, message: 'APP_SECRET不能为空', trigger: 'blur' }
+        ],
+        FESTIVALS_LIMIT: [
+          { required: true, message: 'FESTIVALS_LIMIT不能为空', trigger: 'blur' }
+        ]
+      }
     }
   },
-  methods: {}
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$message.success('添加成功')
+          this.myInfo = 1
+          this.nowState = 0
+        } else {
+          return false
+        }
+      });
+    },
+  }
 }
 </script>
 
@@ -69,6 +129,7 @@ export default {
 	bottom: 0;
   line-height: 40px;
   .body {
+    overflow: auto;
     .home-push {
       margin-top: 30px;
       text-align: center;
