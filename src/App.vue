@@ -157,7 +157,7 @@
       </div>
     </div>
     <div class="bottom">
-      made by shuangxunian | code github
+      made by <el-link href="https://shuangxunian.github.io/" target="_blank">shuangxunian</el-link> | code <el-link href="https://github.com/shuangxunian/wechat-form" target="_blank">github</el-link>
     </div>
   </div>
 </template>

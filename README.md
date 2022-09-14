@@ -1,24 +1,4 @@
 # wechat
+这个项目是辅助[wechat-public-account-push](https://github.com/wangxinleo/wechat-public-account-push)项目生成个人信息的配套文件，有bug在群里艾特霜序廿即可，使用方法如下：
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
