@@ -22,11 +22,18 @@
           </el-col>
         </el-row>
         <div class="info">
-          个人信息{{ myInfo ? '已添加' : '未添加' }}，当前一共添加{{ getuser.length }}个接收人
+          个人信息{{ myInfo ? '已添加' : '未添加' }}，当前一共添加{{ USERS.length }}个接收人
         </div>
         <div class="home-push">
-          <el-button>生成</el-button>
+          <el-button @click="build">生成</el-button>
         </div>
+        <el-input
+          style="margin-top:20px"
+          type="textarea"
+          :rows="2"
+          placeholder="请输入内容"
+          v-model="textarea">
+        </el-input>
       </div>
       <div v-if="nowState === 1">
         <el-form label-position="left" :model="userInfo" :rules="rules" ref="userRef" label-width="150px">
@@ -81,7 +88,6 @@
               type="date"
               placeholder="选择日期">
             </el-date-picker>
-            <!-- <el-input v-model="getInfo.horoscopeDate"></el-input> -->
           </el-form-item>
           <el-form-item label="获取运势的时间" prop="horoscopeDateType">
             <el-select v-model="getInfo.horoscopeDateType" placeholder="请选择" style="width:220px">
@@ -92,14 +98,60 @@
                 :value="item.name">
               </el-option>
             </el-select>
-            <!-- <el-input v-model="getInfo.horoscopeDateType"></el-input> -->
           </el-form-item>
           <el-form-item label="点击详情跳转页" prop="openUrl">
             <el-input v-model="getInfo.openUrl"></el-input>
           </el-form-item>
           <el-form-item>
-            <!-- <el-button type="primary" @click="submitForm('getRef')">立即创建</el-button> -->
-            <el-button type="primary" @click="next">下一步</el-button>
+            <el-button type="primary" @click="nextTo3">下一步</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div v-if="nowState === 3">
+        <h3>专属节日提醒，已设置{{ getInfo.festivals.length }}个</h3>
+        <el-form label-position="left" :model="thisFestival" :rules="rules" ref="thisFestivalRef" label-width="150px">
+          <el-form-item label="节假日" prop="type">
+            <el-select v-model="thisFestival.type" placeholder="请选择" style="width:220px">
+              <el-option
+                v-for="item in festivalOption"
+                :key="item.value"
+                :label="item.name"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="名称" prop="name">
+            <el-input v-model="thisFestival.name"></el-input>
+          </el-form-item>
+          <el-form-item label="日期" prop="date">
+            <el-date-picker
+              v-model="thisFestival.date"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="addFestival">添加</el-button>
+            <el-button type="primary" @click="nextTo4">下一步</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div v-if="nowState === 4">
+        <h3>专属纪念日提醒，已设置{{ getInfo.customizedDateList.length }}个</h3>
+        <el-form label-position="left" :model="mark" :rules="rules" ref="markRef" label-width="150px">
+          <el-form-item label="名称" prop="name">
+            <el-input v-model="mark.name"></el-input>
+          </el-form-item>
+          <el-form-item label="日期" prop="date">
+            <el-date-picker
+              v-model="mark.date"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="addMark">添加</el-button>
+            <el-button type="primary" @click="allFinish">完成</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -118,6 +170,7 @@ export default {
   },
   data () {
     return {
+      textarea: '',
       nowState: 0,
       myInfo: 0,
       getuser: [],
@@ -131,6 +184,11 @@ export default {
         { name: '本周' },
         { name: '本月' },
         { name: '今年' }
+      ],
+      festivalOption: [
+        { name: '阴历生日', value: '*生日' },
+        { name: '阳历生日', value: '生日' },
+        { name: '节日', value: '节日' }
       ],
       userInfo: {
         APP_ID: '',
@@ -165,18 +223,30 @@ export default {
           { required: true, message: '所在城市不能为空', trigger: 'blur' }
         ],
         horoscopeDate: [
-          { required: true, message: '星座运势不能为空', trigger: 'blur' }
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         horoscopeDateType: [
           { required: true, message: '获取运势的时间不能为空', trigger: 'blur' }
         ],
         openUrl: [
           { required: true, message: '详情页不能为空', trigger: 'blur' }
+        ],
+        type: [
+          { required: true, message: '节假日不能为空', trigger: 'blur' }
+        ],
+        date: [
+          { required: true, message: '日期不能为空', trigger: 'blur' }
         ]
       },
       getInfo: {},
+      thisFestival: {},
+      mark: {},
       USERS: []
     }
+  },
+  created() {
+    this.refreshGetInfo()
+    this.refreshthisFestival()
   },
   methods: {
     refreshGetInfo() {
@@ -191,6 +261,21 @@ export default {
         openUrl: 'https://shuangxunian.github.io/',
         festivals: [],
         customizedDateList: []
+      }
+    },
+    refreshthisFestival() {
+      // "type": "生日", "name": "李四", "year": "1996", "date": "09-31"
+      this.thisFestival = {
+        type: '',
+        name: '',
+        date: '',
+        year: ''
+      }
+    },
+    refreshMark() {
+      this.mark = {
+        name: '',
+        date: ''
       }
     },
     submitForm(formName) {
@@ -221,7 +306,7 @@ export default {
       d = d < 10 ? ('0' + d) : d
       return m + '-' + d
     },
-    next () {
+    nextTo3 () {
       this.$refs.getRef.validate((valid) => {
         if (valid) {
           this.$message.success('已保存')
@@ -231,6 +316,51 @@ export default {
           return false
         }
       });
+    },
+    addFestival () {
+      this.$refs.thisFestivalRef.validate((valid) => {
+        if (valid) {
+          const ymd = this.getYMD(this.thisFestival.date).split('-')
+          this.thisFestival.year = ymd[0]
+          this.thisFestival.date = ymd[1] + '-' + ymd[2]
+          this.getInfo.festivals.push(this.thisFestival)
+          this.refreshthisFestival()
+        } else {
+          return false
+        }
+      });
+    },
+    nextTo4 () {
+      if (this.thisFestival.type || this.thisFestival.name || this.thisFestival.date) return this.$message.error('必须要保存当前数据才可进入下一步！')
+      if (this.getInfo.festivals.length === 0) return this.$message.error('必须要有一个节假日！')
+      this.nowState = 4
+    },
+    addMark () {
+      this.mark.date = this.getYMD(this.mark.date)
+      this.getInfo.customizedDateList.push(this.mark)
+      this.refreshMark()
+    },
+    allFinish () {
+      this.USERS.push(this.getInfo)
+      this.refreshGetInfo()
+      this.nowState = 0
+    },
+    build () {
+      if (this.USERS.length === 0 || !this.userInfo.APP_ID) return this.$message.error('当前缺少必填数据，请检查！')
+      const config = {
+        APP_ID: this.userInfo.APP_ID,
+        APP_SECRET: this.userInfo.APP_SECRET,
+        isShowColor: this.userInfo.isShowColor,
+        CALLBACK_TEMPLATE_ID: this.userInfo.CALLBACK_TEMPLATE_ID,
+        CALLBACK_USERS: [{
+          name: "自己",
+          id: this.userInfo.CALLBACK_USERS,
+        }],
+        USERS: this.USERS
+      }
+      this.textarea = JSON.stringify(config)
+      // this.nowState = 5
+      // console.log(config)
     }
   }
 }
@@ -259,6 +389,9 @@ export default {
     }
   }
   h1 {
+    text-align: center;
+  }
+  h3 {
     text-align: center;
   }
   .el-row {
