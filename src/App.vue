@@ -36,6 +36,79 @@
         </el-input>
       </div>
       <div v-if="nowState === 1">
+        <h3>功能选择</h3>
+        <el-form label-position="left" :model="changeFun" label-width="170px">
+          <el-form-item label="每日天气">
+            <el-switch
+              v-model="changeFun.weather"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="下一休息日提醒">
+            <el-switch
+              v-model="changeFun.holidaytts"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="金山每日一句">
+            <el-switch
+              v-model="changeFun.CIBA"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="每日一言">
+            <el-switch
+              v-model="changeFun.oneTalk"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="土味情话">
+            <el-switch
+              v-model="changeFun.earthyLoveWords"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="朋友圈文案">
+            <el-switch
+              v-model="changeFun.momentCopyrighting"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="毒鸡汤">
+            <el-switch
+              v-model="changeFun.poisonChickenSoup"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="古诗古文">
+            <el-switch
+              v-model="changeFun.poetry"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="星座运势">
+            <el-switch
+              v-model="changeFun.horoscope"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="生日消息和节日消息">
+            <el-switch
+              v-model="changeFun.birthdayMessage"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+        </el-form>
         <el-form label-position="left" :model="userInfo" :rules="rules" ref="userRef" label-width="150px">
           <el-form-item label="APP_ID" prop="APP_ID">
             <el-input v-model="userInfo.APP_ID"></el-input>
@@ -65,7 +138,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-if="nowState === 2">
+      <div  v-if="nowState === 2">
         <el-form label-position="left" :model="getInfo" :rules="rules" ref="getRef" label-width="170px">
           <el-form-item label="名字" prop="name">
             <el-input v-model="getInfo.name"></el-input>
@@ -241,12 +314,14 @@ export default {
       getInfo: {},
       thisFestival: {},
       mark: {},
-      USERS: []
+      USERS: [],
+      changeFun: {}
     }
   },
   created() {
     this.refreshGetInfo()
     this.refreshthisFestival()
+    this.refreshChangeFun()
   },
   methods: {
     refreshGetInfo() {
@@ -276,6 +351,20 @@ export default {
       this.mark = {
         name: '',
         date: ''
+      }
+    },
+    refreshChangeFun() {
+      this.changeFun = {
+        weather: true,
+        holidaytts: true,
+        CIBA: true,
+        oneTalk: false,
+        earthyLoveWords: false,
+        momentCopyrighting: false,
+        poisonChickenSoup: false,
+        poetry: false,
+        horoscope: false,
+        birthdayMessage: true,
       }
     },
     submitForm(formName) {
@@ -356,7 +445,8 @@ export default {
           name: "自己",
           id: this.userInfo.CALLBACK_USERS,
         }],
-        USERS: this.USERS
+        USERS: this.USERS,
+        SWITCH: this.changeFun
       }
       this.textarea = JSON.stringify(config)
       // this.nowState = 5
@@ -379,6 +469,7 @@ export default {
 	bottom: 0;
   line-height: 40px;
   .body {
+    height: 680px;
     overflow: auto;
     .home-push {
       margin-top: 30px;
