@@ -54,6 +54,19 @@
 
 ![](https://api2.mubu.com/v3/document_image/6c1770bb-4fc1-4c7f-adb1-2a5346da3459-3807603.jpg)
 
+## 最后
+点击生成按钮，生成一串字符串，全选复制，然后按照顺序操作：
+
+![](https://api2.mubu.com/v3/document_image/0901092e-a2e5-4bbd-b9e2-8d95f6598816-3807603.jpg)
+
+![](https://api2.mubu.com/v3/document_image/d1d797fd-266f-4a4b-9edf-020f11fb2003-3807603.jpg)
+
+![](https://api2.mubu.com/v3/document_image/c9d06f9e-acee-496a-87b8-c9e17bc33d39-3807603.jpg)
+
+注意：
+- 一定是：**USER_INFO**，请直接复制粘贴，大小写不同同样会失效。
+- 2中的是你刚才复制的那一串字符，直接粘贴即可。
+
 ## end
 有问题请先自己搜索[原文档](https://github.com/wangxinleo/wechat-public-account-push)，如果还不能解决请到群里提问
 
