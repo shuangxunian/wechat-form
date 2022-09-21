@@ -61,11 +61,20 @@
 
 ![](https://api2.mubu.com/v3/document_image/d1d797fd-266f-4a4b-9edf-020f11fb2003-3807603.jpg)
 
-![](https://api2.mubu.com/v3/document_image/c9d06f9e-acee-496a-87b8-c9e17bc33d39-3807603.jpg)
+![](https://api2.mubu.com/v3/document_image/3faaf169-07e1-449a-82aa-e22c69823127-3807603.jpg)
 
 注意：
 - 一定是：**USER_INFO**，请直接复制粘贴，大小写不同同样会失效。
-- 2中的是你刚才复制的那一串字符，直接粘贴即可。
+
+![](https://api2.mubu.com/v3/document_image/36d3e343-e7db-4bb1-8494-aa05a5918725-3807603.jpg)
+
+![](https://api2.mubu.com/v3/document_image/e26d7d58-8cc2-44e7-b6fe-c8f84b773946-3807603.jpg)
+
+![](https://api2.mubu.com/v3/document_image/ba28795c-0daf-4af4-bc30-b878879b6c04-3807603.jpg)
+
+在此修改时间，第一个数字代表分钟，第二个代表小时，用小时+8为中国时间，同时github的action可能会延迟发送。
+
+![](https://api2.mubu.com/v3/document_image/c47bcf19-9a64-46af-9950-1054c1d9e578-3807603.jpg)
 
 ## end
 有问题请先自己搜索[原文档](https://github.com/wangxinleo/wechat-public-account-push)，如果还不能解决请到群里提问
