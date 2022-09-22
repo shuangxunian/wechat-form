@@ -439,7 +439,7 @@ export default {
       const config = {
         APP_ID: this.userInfo.APP_ID,
         APP_SECRET: this.userInfo.APP_SECRET,
-        isShowColor: this.userInfo.isShowColor,
+        IS_SHOW_COLOR: this.userInfo.isShowColor,
         CALLBACK_TEMPLATE_ID: this.userInfo.CALLBACK_TEMPLATE_ID,
         CALLBACK_USERS: [{
           name: "自己",
