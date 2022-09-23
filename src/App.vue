@@ -213,11 +213,11 @@
         <h3>专属纪念日提醒，已设置{{ getInfo.customizedDateList.length }}个</h3>
         <el-form label-position="left" :model="mark" :rules="rules" ref="markRef" label-width="150px">
           <el-form-item label="名称" prop="name">
-            <el-input v-model="mark.name"></el-input>
+            <el-input v-model="mark.keyword"></el-input>
           </el-form-item>
           <el-form-item label="日期" prop="date">
             <el-date-picker
-              v-model="mark.date"
+              v-model="mark.keyword"
               type="date"
               placeholder="选择日期">
             </el-date-picker>
@@ -349,7 +349,7 @@ export default {
     },
     refreshMark() {
       this.mark = {
-        name: '',
+        keyword: '',
         date: ''
       }
     },
@@ -425,7 +425,7 @@ export default {
       this.nowState = 4
     },
     addMark () {
-      this.mark.date = this.getYMD(this.mark.date)
+      this.mark.keyword = this.getYMD(this.mark.keyword)
       this.getInfo.customizedDateList.push(this.mark)
       this.refreshMark()
     },
