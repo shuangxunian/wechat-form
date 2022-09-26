@@ -21,4 +21,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: html # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy.
+          FOLDER: dist # The folder the action should deploy.
