@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: process.env.NODE_ENV === 'production' ? '//shuangxunian.github.io/wechat-form/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
 })
