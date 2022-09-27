@@ -414,6 +414,7 @@ export default {
           this.thisFestival.date = ymd[1] + '-' + ymd[2]
           this.getInfo.festivals.push(this.thisFestival)
           this.refreshthisFestival()
+    			this.$message.success('添加成功！')
         } else {
           return false
         }
@@ -425,7 +426,9 @@ export default {
       this.nowState = 4
     },
     addMark () {
-      this.mark.keyword = this.getYMD(this.mark.keyword)
+    	if (!(this.mark.date || this.mark.keyword)) return this.$message.error('必须要保存当前数据才可进入下一步！')
+    	this.$message.success('添加成功！')
+      this.mark.date = this.getYMD(this.mark.date)
       this.getInfo.customizedDateList.push(this.mark)
       this.refreshMark()
     },
