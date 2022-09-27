@@ -212,7 +212,7 @@
       <div v-if="nowState === 4">
         <h3>专属纪念日提醒，已设置{{ getInfo.customizedDateList.length }}个</h3>
         <el-form label-position="left" :model="mark" :rules="rules" ref="markRef" label-width="150px">
-          <el-form-item label="名称" prop="name">
+          <el-form-item label="名称" prop="keyword">
             <el-input v-model="mark.keyword"></el-input>
           </el-form-item>
           <el-form-item label="日期" prop="date">
@@ -282,6 +282,9 @@ export default {
         ],
         name: [
           { required: true, message: '名字不能为空', trigger: 'blur' }
+        ],
+	keyword: [
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         id: [
           { required: true, message: 'id不能为空', trigger: 'blur' }
