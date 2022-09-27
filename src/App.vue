@@ -425,7 +425,7 @@ export default {
       this.nowState = 4
     },
     addMark () {
-      this.mark.keyword = this.getYMD(this.mark.keyword)
+      this.mark.date = this.getYMD(this.mark.date)
       this.getInfo.customizedDateList.push(this.mark)
       this.refreshMark()
     },
