@@ -217,7 +217,7 @@
           </el-form-item>
           <el-form-item label="日期" prop="date">
             <el-date-picker
-              v-model="mark.keyword"
+              v-model="mark.date"
               type="date"
               placeholder="选择日期">
             </el-date-picker>
