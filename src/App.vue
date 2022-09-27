@@ -127,7 +127,7 @@
             </el-select>
             <!-- <el-input v-model="userInfo.isShowColor"></el-input> -->
           </el-form-item>
-          <el-form-item label="结果返回模板" prop="CALLBACK_TEMPLATE_ID">
+          <el-form-item label="结果返回模板id" prop="CALLBACK_TEMPLATE_ID">
             <el-input v-model="userInfo.CALLBACK_TEMPLATE_ID"></el-input>
           </el-form-item>
           <el-form-item label="自己的id" prop="CALLBACK_USERS">
